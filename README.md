@@ -12,9 +12,8 @@ Raspberry Pi powered ground station for commercial flights that does the followi
  in IBM's Bluemix Cloud.
 
 The MQTT messages from the IBM Bluemix Cloud can then be transmitted over to devices, based on their
-coordinates, to be able to track flights in the vicinity of the device.  Details on receiving MQTT
-messages and tracking the flights on an iOS device are
-[here](https://github.ibm.com/rogue-one/IBMFlightTracker).
+coordinates, to be able to track flights in the vicinity of the device. Details of iOS flight tracking
+app using Augmented Reality are further below in it's own [section](#flight-tracker).
 
 SDR devices such as [NooElec's RTL-SDR receiver set with antenna]
 (http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html), which support USB 2.0
@@ -69,17 +68,16 @@ That's it! Before we can receive ADS-B messages from RTL-SDR receiver, we have t
 and run specialized software called `Dump1090 Server` on Raspberry Pi 3.
 
 There are two options to build and run `Dump1090 Server`. You can either use the
-[Dockerfile](https://github.ibm.com/rogue-one/adsb.ground.station/blob/master/Dockerfile) to create
- a Docker image that would in turn contain all the necessary software to build and run `Dump1090 Server`
- in a Docker container or you can install the software that let's you build and run `Dump1090 Server`
- directly on your Raspberry Pi 3. The following sections provide steps for both of these approaches.
+[Dockerfile](Dockerfile) to create a Docker image that would in turn contain all the necessary
+software to build and run `Dump1090 Server` in a Docker container or you can install the software
+that let's you build and run `Dump1090 Server` directly on your Raspberry Pi 3. The following
+sections provide steps for both of these approaches.
 
 ## Using Docker on Raspberry Pi 3 to build and run Dump1090 Server
 
-Using the [Dockerfile](https://github.ibm.com/rogue-one/adsb.ground.station/blob/master/Dockerfile)
-that is part of this repository, you can create a Docker image that would contain all
-the necessary software to build and run `Dump1090 Server` from within the Docker container
-running on Raspberry Pi 3.
+Using the [Dockerfile](Dockerfile) that is part of this repository, you can create a Docker image
+that would contain all the necessary software to build and run `Dump1090 Server` from within the
+Docker container running on Raspberry Pi 3.
 
 Here are the steps to accomplish this:
 
@@ -266,8 +264,8 @@ building this project on a regular laptop/desktop.
 ## Steps for building this project
 ```
 $ cd ~
-$ git clone https://github.ibm.com/rogueone/adsb.ground.station
-$ cd adsb.ground.station
+$ git clone <url_to_this_repo>
+$ cd <repo-name>
   Update src/main/resources/device.properties file using the device registration details from the
   earlier step. Failure to do this will result in java.net.UnknownHostException during startup.
 $ mvn clean install
@@ -318,4 +316,30 @@ without `Dump1090 Server`, you can do the following:
 $ java -cp . -jar adsb.ground.station-develop-SNAPSHOT.jar --simulate-sdr
 ```
 
+# Flight Tracker
+
+FlightTracker is an iOS based app which tracks flight pushed by SDR/ADSB message receiver through
+MQTT server. The app will display all the flights travelling point to point within the range of the
+receiver. IBM Flight tracker app is connected to IBM MQTT server to a topic which receives
+new/updated flight information based on which is rendered into the map view. The data is fed to the
+topic by SDR/ADSB message receiver. The map also shows animated view of flights heading in a
+particular direction towards its destination.
+
+## Pre-requisites
+- Swift 3
+- Xcode 8.0+
+- CocoaPod - https://cocoapods.org/
+
+## Dependencies
+- CocoaMQTT -  Note: moving to aphid client by IBM
+- SwiftyJSON
+
+## Steps:
+```
+1. git clone <url-to-this-repo>
+2. cd <repo-name>/ARFlightTrackerApp and open IBMFlightTracker.xcworkspace using Xcode
+3. Run pod install from the project directory. This will install the dependencies define in `Podfile`
+4. Change MQTT credentials in class  util/MQTTConnection.swift using Xcode editor
+5. Build and Run
+```
 
