@@ -319,4 +319,4 @@ $ java -cp . -jar adsb.ground.station-develop-SNAPSHOT.jar --simulate-sdr
 # Flight Tracker
 
 The iOS Flight Tracker app is added as a Git submodule to this repo. The instructions to run the
-iOS app can be found [here](ARFlightTracker-iOS-Swift/README.md).
+iOS app can be found with the submodule.
