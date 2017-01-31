@@ -264,7 +264,7 @@ building this project on a regular laptop/desktop.
 ## Steps for building this project
 ```
 $ cd ~
-$ git clone <url_to_this_repo>
+$ git clone --recursive <url_to_this_repo>
 $ cd <repo-name>
   Update src/main/resources/device.properties file using the device registration details from the
   earlier step. Failure to do this will result in java.net.UnknownHostException during startup.
@@ -318,28 +318,5 @@ $ java -cp . -jar adsb.ground.station-develop-SNAPSHOT.jar --simulate-sdr
 
 # Flight Tracker
 
-FlightTracker is an iOS based app which tracks flight pushed by SDR/ADSB message receiver through
-MQTT server. The app will display all the flights travelling point to point within the range of the
-receiver. IBM Flight tracker app is connected to IBM MQTT server to a topic which receives
-new/updated flight information based on which is rendered into the map view. The data is fed to the
-topic by SDR/ADSB message receiver. The map also shows animated view of flights heading in a
-particular direction towards its destination.
-
-## Pre-requisites
-- Swift 3
-- Xcode 8.0+
-- CocoaPod - https://cocoapods.org/
-
-## Dependencies
-- CocoaMQTT -  Note: moving to aphid client by IBM
-- SwiftyJSON
-
-## Steps:
-```
-1. git clone <url-to-this-repo>
-2. cd <repo-name>/ARFlightTrackerApp and open IBMFlightTracker.xcworkspace using Xcode
-3. Run pod install from the project directory. This will install the dependencies define in `Podfile`
-4. Change MQTT credentials in class  util/MQTTConnection.swift using Xcode editor
-5. Build and Run
-```
-
+The iOS Flight Tracker app is added as a Git submodule to this repo. The instructions to run the
+iOS app can be found [here](ARFlightTracker-iOS-Swift/README.md).
