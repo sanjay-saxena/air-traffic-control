@@ -256,7 +256,7 @@ $ cd ~
 $ git clone --recursive <url_to_this_repo>
 $ cd <repo-name>
   Update src/main/resources/application.properties file using the information obtained from the
-  earlier step. Failure to do this will result in java.net.UnknownHostException during startup.
+  earlier step. Failure to do this will result in java.io.IOException during startup.
 $ mvn clean install
 ```
 

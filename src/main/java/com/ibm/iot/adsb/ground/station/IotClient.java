@@ -41,6 +41,10 @@ public class IotClient {
 
         deviceType = APP_PROPERTIES.getProperty("Device-Type");
         deviceId = APP_PROPERTIES.getProperty("Device-ID");
+
+        // Specify unique "id" so that multiple instances of this app can concurrently publish MQTT
+        // messages on behalf of the same IoT device without requiring a hardcoded entry in the
+        // properties file.
         APP_PROPERTIES.setProperty("id", String.valueOf(System.currentTimeMillis()));
     }
 
