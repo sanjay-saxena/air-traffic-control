@@ -22,30 +22,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
-import com.ibm.iotf.client.device.DeviceClient;
+import com.ibm.iotf.client.app.ApplicationClient;
 
 public class IotClient {
-    private static final String PROPERTIES_FILE_NAME = "/device.properties";
-    private static final Properties DEVICE_PROPERTIES = loadProperties();
+    private static final String APP_PROPERTIES_FILE_NAME = "/application.properties";
+    private static final Properties APP_PROPERTIES = loadProperties(APP_PROPERTIES_FILE_NAME);
 
     private final Logger logger = LoggerFactory.getLogger(IotClient.class);
+    private final String deviceType;
+    private final String deviceId;
 
-    private DeviceClient deviceClient;
+    private ApplicationClient applicationClient;
 
     public IotClient( ) {
         if (logger.isDebugEnabled()) {
-            logger.debug(DEVICE_PROPERTIES.toString());
+            logger.debug(APP_PROPERTIES.toString());
         }
 
+        deviceType = APP_PROPERTIES.getProperty("Device-Type");
+        deviceId = APP_PROPERTIES.getProperty("Device-ID");
+        APP_PROPERTIES.setProperty("id", String.valueOf(System.currentTimeMillis()));
     }
 
     public void connect() throws IOException {
         try {
-            deviceClient = new DeviceClient(DEVICE_PROPERTIES);
-            deviceClient.connect();
+            applicationClient = new ApplicationClient(APP_PROPERTIES);
+            applicationClient.connect();
 
             if (logger.isDebugEnabled()) {
-                logger.debug("Connected to Watson Iot Platform: " + deviceClient.isConnected());
+                logger.debug("Connected to Watson Iot Platform: " + applicationClient.isConnected());
             }
         } catch (Exception e) {
             logger.error("Failed to connect to Watson IoT Platform", e.getMessage());
@@ -54,12 +59,12 @@ public class IotClient {
     }
 
     public void disconnect() {
-        deviceClient.disconnect();
-        deviceClient = null;
+        applicationClient.disconnect();
+        applicationClient = null;
     }
 
     public boolean isConnected() {
-        return (deviceClient != null) ? deviceClient.isConnected() : false;
+        return (applicationClient != null) ? applicationClient.isConnected() : false;
     }
 
     public void publishEvent(Flight flight) throws IOException {
@@ -67,7 +72,7 @@ public class IotClient {
             return;
         }
 
-        if ((deviceClient == null) || !deviceClient.isConnected()) {
+        if ((applicationClient == null) || !applicationClient.isConnected()) {
             logger.info("Reconnecting to IBM Bluemix...");
             connect();
             logger.info("Reconnected successfully to IBM Bluemix...");
@@ -79,14 +84,14 @@ public class IotClient {
 
         JsonObject jsonObject = flight.getJsonObject();
         logger.info("Publishing MQTT message");
-        deviceClient.publishEvent("flight", jsonObject);
+        applicationClient.publishEvent(deviceType, deviceId, "flight", jsonObject);
         logger.info("Published MQTT message");
     }
 
-    private static Properties loadProperties() {
+    private static Properties loadProperties(String propertiesFileName) {
         Properties props = new Properties();
         try {
-            props.load(IotClient.class.getResourceAsStream(PROPERTIES_FILE_NAME));
+            props.load(IotClient.class.getResourceAsStream(propertiesFileName));
         } catch (IOException ex) {
             System.out.println("Not able to read the properties file!");
             ex.printStackTrace();

@@ -217,38 +217,27 @@ connections on port `30002`. All the connected clients will receive the raw ADS-
 receive raw ADS-B messages, decode the ADS-B messages, and publish corresponding MQTT messages
 to IoT Platform in IBM Bluemix Cloud.
 
-## Registering Device with IBM IoT Platform
+## Registering Device and Generating API Key with IBM IoT Platform
 Since this project will be sending MQTT messages to the IoT Platform running in IBM Bluemix Cloud,
-a device must be registered with the IoT Platform. Follow the steps in this
+follow the steps in this
 [recipe](https://developer.ibm.com/recipes/tutorials/how-to-register-devices-in-ibm-iot-foundation/)
-to register a device with the IoT Platform. Copy the device registration details, like the following:
+from within the IoT Platform's dashboard to do the following:
+ * Register a device-type and device-id
+ * Generate API Key and the corresponding Authentication Token for the app
+
+Note that the registered device will have it's own Authentication Token. However, in this exercise,
+we will be **only** using the the Authentication Token of the app.
+
+You should the following information when you are done with the aforementioned steps:
 
  * Organization-ID=[Your Organization ID]
+ * API-Key=[Your Apps' API-Key]
+ * Authentication-Token=**[Your Apps' Authentication Token]**
  * Device-Type=[Your Device Type]
  * Device-ID=[Your Device ID]
- * Authentication-Method=token
- * Authentication-Token=[Your Device Token]
 
-This information will be used in the next set of steps when updating `device.properties` file
+This information will be used in the next set of steps when updating `application.properties` file
 **before** building the executable jar using this project/repo.
-
-**Note:**
-```
-A new device must be registered with the IoT Platform for every running instance of the executable jar.
-The device registration details are unique for each running instance of the executable jar and cannot
-be shared. Since a device can only have one connection with the IoT Platform, there can be only one
-process that is running the executable jar at any time.
-
-For example, if there are two Raspberry Pi 3 that will be sending MQTT messages to the IoT Platform
-by running the executable jar, then two separate devices should be registered with IoT Platform. The
-`device.properties` file should be updated with the specific registration details before building the
-executable jar targeted specifically for each of the Raspberry Pi 3 machines.
-
-Similarly, if a Raspberry Pi 3 and a MacBook Pro will be sending MQTT messages to the IoT Platform
-by running the executable jar, then two separate devices should be registered with IoT Platform. The
-`device.properties` file should be updated with the specific registration details before building the
-executable jar targeted specifically for each of the machines(Raspberry Pi 3 and MacBook Pro).
-```
 
 ## Building this project
 Minimum requirements for building this project are:
@@ -266,7 +255,7 @@ building this project on a regular laptop/desktop.
 $ cd ~
 $ git clone --recursive <url_to_this_repo>
 $ cd <repo-name>
-  Update src/main/resources/device.properties file using the device registration details from the
+  Update src/main/resources/application.properties file using the information obtained from the
   earlier step. Failure to do this will result in java.net.UnknownHostException during startup.
 $ mvn clean install
 ```
