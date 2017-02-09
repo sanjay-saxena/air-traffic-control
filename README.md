@@ -228,7 +228,7 @@ from within the IoT Platform's dashboard to do the following:
 Note that the registered device will have it's own Authentication Token. However, in this exercise,
 we will be **only** using the the Authentication Token of the app.
 
-You should the following information when you are done with the aforementioned steps:
+You should have the following information when you are done with the aforementioned steps:
 
  * Organization-ID=[Your Organization ID]
  * API-Key=[Your Apps' API-Key]
