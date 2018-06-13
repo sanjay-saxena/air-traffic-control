@@ -5,11 +5,11 @@ Raspberry Pi powered ground station for commercial flights that does the followi
  * _receives_ [Automatic Dependent Surveillance Broadcast](http://airfactsjournal.com/2013/01/ads-b-101-what-it-is-and-why-you-should-care/)(ADS-B)
  messages broadcasted by commercial flights using a Software-Defined Radio(SDR) device tuned to 1090MHz frequency
  * _decodes_ ADS-B messages from commercial flights
- * _publishes_ corresponding [MQTT](http://mqtt.org/) messages to [Bluemix Internet of Things IoT
+ * _publishes_ corresponding [MQTT](http://mqtt.org/) messages to [Internet of Things IoT
  Platform](https://console.ng.bluemix.net/catalog/services/internet-of-things-platform/?taxonomyNavigation=applications)
- in IBM's Bluemix Cloud.
+ in IBM Cloud.
 
-The MQTT messages from the IBM Bluemix Cloud can then be transmitted over to devices, based on their
+The MQTT messages from the IBM Cloud can then be transmitted over to devices, based on their
 coordinates, to be able to track flights in the vicinity of the device. Details of iOS flight tracking
 app using Augmented Reality are further below in it's own [section](#flight-tracker).
 
@@ -21,7 +21,7 @@ commercial flights, within a decent radius, on practically any device with a USB
 As part of this exercise, a Raspberry Pi 3 along with [NooElec's RTL-SDR receiver set with
 antenna](http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html) were used to not only
 receive ADS-B messages from commercial flights and decode them but also to publish corresponding
-MQTT messages to IBM Bluemix IoT Platform.
+MQTT messages to IoT Platform service on IBM Cloud.
 
 The following sections describe in great detail how to set up Raspberry Pi 3 so that it can publish
 information about commercial flights in it's vicinity over IBM Cloud. One can imagine a whole bunch
@@ -213,10 +213,10 @@ connections on port `30002`. All the connected clients will receive the raw ADS-
 
 `adsb.ground.station` will act as TCP client that will connect to the `Dump1090 Server` to
 receive raw ADS-B messages, decode the ADS-B messages, and publish corresponding MQTT messages
-to IoT Platform in IBM Bluemix Cloud.
+to IoT Platform in IBM Cloud.
 
 ## Registering Device and Generating API Key with IBM IoT Platform
-Since this project will be sending MQTT messages to the IoT Platform running in IBM Bluemix Cloud,
+Since this project will be sending MQTT messages to the IoT Platform running in IBM Cloud,
 follow the steps in this
 [recipe](https://developer.ibm.com/recipes/tutorials/how-to-register-devices-in-ibm-iot-foundation/)
 from within the IoT Platform's dashboard to do the following:
