@@ -2,26 +2,24 @@
 
 Raspberry Pi powered ground station for commercial flights that does the following:
 
- * _receives_ [Automatic Dependent Surveillance-Broadcast(ADS-B)]
- (http://airfactsjournal.com/2013/01/ads-b-101-what-it-is-and-why-you-should-care/) messages
- broadcasted by commercial flights using a Software-Defined Radio(SDR) device tuned to 1090 MHz
- frequency
+ * _receives_ [Automatic Dependent Surveillance Broadcast](http://airfactsjournal.com/2013/01/ads-b-101-what-it-is-and-why-you-should-care/)(ADS-B)
+ messages broadcasted by commercial flights using a Software-Defined Radio(SDR) device tuned to 1090MHz frequency
  * _decodes_ ADS-B messages from commercial flights
- * _publishes_ corresponding [MQTT](http://mqtt.org/) messages to [Bluemix Internet of Things(IoT) Platform]
- (https://console.ng.bluemix.net/catalog/services/internet-of-things-platform/?taxonomyNavigation=applications)
+ * _publishes_ corresponding [MQTT](http://mqtt.org/) messages to [Bluemix Internet of Things IoT
+ Platform](https://console.ng.bluemix.net/catalog/services/internet-of-things-platform/?taxonomyNavigation=applications)
  in IBM's Bluemix Cloud.
 
 The MQTT messages from the IBM Bluemix Cloud can then be transmitted over to devices, based on their
 coordinates, to be able to track flights in the vicinity of the device. Details of iOS flight tracking
 app using Augmented Reality are further below in it's own [section](#flight-tracker).
 
-SDR devices such as [NooElec's RTL-SDR receiver set with antenna]
-(http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html), which support USB 2.0
+SDR devices such as [NooElec's RTL-SDR receiver set with
+antenna](http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html), which support USB 2.0
 interface, can be used to receive ADS-B messages that are being broadcasted in clear text by
 commercial flights, within a decent radius, on practically any device with a USB port.
 
-As part of this exercise, a Raspberry Pi 3 along with [NooElec's RTL-SDR receiver set with antenna]
-(http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html) were used to not only
+As part of this exercise, a Raspberry Pi 3 along with [NooElec's RTL-SDR receiver set with
+antenna](http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html) were used to not only
 receive ADS-B messages from commercial flights and decode them but also to publish corresponding
 MQTT messages to IBM Bluemix IoT Platform.
 
@@ -34,8 +32,8 @@ conventional airline traffic controllers.
 
 ## Hardware Requirements
  * Raspberry Pi 3 with at least 32GB SD card
- * SDR device such as [NooElec's RTL-SDR receiver set with antenna]
- (http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html)
+ * SDR device such as [NooElec's RTL-SDR receiver set with
+ antenna](http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html)
 
 ## Software Requirements
 In addition to the aforementioned hardware, `adsb.ground.station` requires the following software:
@@ -59,8 +57,8 @@ be configured:
 
 Here are the steps to accomplish the configuration:
 
- * Attach the antenna to the [NooElec's RTL-SDR receiver dongle]
- (http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html).
+ * Attach the antenna to the [NooElec's RTL-SDR receiver
+ dongle](http://www.nooelec.com/store/sdr/sdr-receivers/nesdr-mini-2-plus.html).
  * Plug in NooElec's RTL-SDR receiver into the Raspberry Pi's USB port.
  * Power up Raspberry Pi 3 using the micro-USB port.
 
@@ -260,7 +258,7 @@ $ cd <repo-name>
 $ mvn clean install
 ```
 
-The `adsb.ground.station/target` folder will contain the executable jar 
+The `adsb.ground.station/target` folder will contain the executable jar
 `adsb.ground.station/target-default-SNAPSHOT.jar` specifically targeted for the device whose
 registration details are specified in the `device.properties` file. Since a device can maintain
 only one connection with IoT Platform, only one instance of the executable jar file should be
